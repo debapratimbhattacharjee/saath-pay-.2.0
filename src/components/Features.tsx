@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { CreditCard, Banknote, ShieldCheck, PieChart, LineChart, Percent } from 'lucide-react';
+import { CreditCard, Banknote, ShieldCheck, PieChart, LineChart, Percent, BadgeIndianRupee } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 interface FeatureCardProps {
@@ -93,7 +93,7 @@ const Features = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <FeatureCard
-            icon={<CreditCard className="w-6 h-6" />}
+            icon={<BadgeIndianRupee className="w-6 h-6" />}
             title="Virtual Credit Cards"
             description="Access exclusive credit card offers without actually owning a credit card through our secure virtual cards."
             delay={100}

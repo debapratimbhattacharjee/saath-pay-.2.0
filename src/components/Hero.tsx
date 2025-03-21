@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
-import { ArrowRight, IndianRupee } from 'lucide-react';
+import { ArrowRight, CreditCard, BadgeIndianRupee } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const Hero = () => {
@@ -134,7 +134,7 @@ const Hero = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-radial from-cyan-400/10 to-transparent rounded-full animate-pulse-soft"></div>
             
             <div className="relative z-10 w-64 h-64 rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 flex items-center justify-center animate-float">
-              <IndianRupee className="w-32 h-32 text-white" strokeWidth={1.5} />
+              <BadgeIndianRupee className="w-32 h-32 text-white" strokeWidth={1.5} />
               
               <div className="absolute -inset-3 border-2 border-dashed border-cyan-300/30 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
             </div>
