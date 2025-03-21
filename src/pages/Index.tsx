@@ -5,7 +5,6 @@ import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import Footer from '@/components/Footer';
-import { ThemeProvider } from '@/components/ThemeProvider';
 
 const Index = () => {
   useEffect(() => {
@@ -29,17 +28,15 @@ const Index = () => {
   }, []);
 
   return (
-    <ThemeProvider defaultTheme="dark">
-      <div className="min-h-screen overflow-hidden">
-        <Navbar />
-        <main>
-          <Hero />
-          <Features />
-          <HowItWorks />
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+    <div className="min-h-screen bg-white overflow-hidden">
+      <Navbar />
+      <main>
+        <Hero />
+        <Features />
+        <HowItWorks />
+      </main>
+      <Footer />
+    </div>
   );
 };
 
