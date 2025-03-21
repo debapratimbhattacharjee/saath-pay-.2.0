@@ -1,10 +1,39 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
-import { ArrowRight, CreditCard, Lock, PieChart } from 'lucide-react';
+import { ArrowRight, IndianRupee } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const slides = [
+    {
+      title: "Manage Your Expenses",
+      subtitle: "with SaathPay",
+      description: "Split bills easily, track group expenses, and settle payments effortlessly."
+    },
+    {
+      title: "Virtual Credit Cards",
+      subtitle: "with SaathPay",
+      description: "Access exclusive credit card discounts without owning a credit card."
+    },
+    {
+      title: "Improve Credit Score",
+      subtitle: "with SaathPay",
+      description: "Help credit card owners improve their scores while earning incentives."
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,111 +56,101 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24">
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-saath-50/80 to-transparent" />
-        <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-saath-100/50 blur-3xl -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-saath-100/40 blur-3xl translate-x-1/3 translate-y-1/3" />
-      </div>
+    <div 
+      ref={heroRef} 
+      className={cn(
+        "relative min-h-screen pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden",
+        theme === 'dark' ? 'dark-gradient-bg' : 'bg-white'
+      )}
+    >
+      {/* Background elements for dark mode */}
+      {theme === 'dark' && (
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-950/30 to-transparent" />
+          <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-blue-700/10 blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-cyan-500/5 blur-3xl translate-x-1/3 translate-y-1/3" />
+        </div>
+      )}
+      
+      {/* Background elements for light mode */}
+      {theme === 'light' && (
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-saath-50/80 to-transparent" />
+          <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-saath-100/50 blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-saath-100/40 blur-3xl translate-x-1/3 translate-y-1/3" />
+        </div>
+      )}
 
       <div className="container-custom relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left column - Text content */}
           <div className="max-w-lg">
-            <div className="inline-flex items-center px-3 py-1 mb-6 rounded-full bg-saath-100 text-saath-700 text-sm font-medium animate-on-scroll">
-              <span className="mr-2">Exclusive Credit Card Benefits</span>
-              <span className="flex h-2 w-2 rounded-full bg-saath-500"></span>
+            <div className="animate-on-scroll" style={{ animationDelay: "0.1s" }}>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                {slides[activeSlide].title} <br />
+                <span className={theme === 'dark' ? 'saath-brand-text' : 'text-saath-600'}>
+                  {slides[activeSlide].subtitle}
+                </span>
+              </h1>
+              
+              <p className="text-lg text-foreground/80 mb-8">
+                {slides[activeSlide].description}
+              </p>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mb-6 animate-on-scroll" style={{ animationDelay: "0.1s" }}>
-              Bridge The Credit <span className="text-saath-600">Card Gap</span>
-            </h1>
-            
-            <p className="text-lg text-gray-600 mb-8 animate-on-scroll" style={{ animationDelay: "0.2s" }}>
-              Access exclusive credit card discounts without owning one. SaathPay provides virtual cards, helping you save while credit card owners improve their scores.
-            </p>
+            <div className="flex space-x-2 mb-8">
+              {slides.map((_, index) => (
+                <button 
+                  key={index}
+                  onClick={() => setActiveSlide(index)}
+                  className={`dot-indicator ${index === activeSlide ? 'active' : 'inactive'}`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll" style={{ animationDelay: "0.3s" }}>
+              <div className="relative">
+                <input 
+                  type="text"
+                  placeholder="Phone number"
+                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saath-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white phone-input"
+                />
+              </div>
               <Button 
                 variant="primary" 
                 size="lg" 
                 icon={<ArrowRight />}
                 rightIcon={true}
+                className={theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''}
               >
                 Get Started
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-              >
-                Learn More
-              </Button>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-6 mt-12 animate-on-scroll" style={{ animationDelay: "0.4s" }}>
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">97%</p>
-                <p className="text-sm text-gray-600">Cashback Match</p>
-              </div>
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">100+</p>
-                <p className="text-sm text-gray-600">Partners</p>
-              </div>
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">0₹</p>
-                <p className="text-sm text-gray-600">Joining Fee</p>
-              </div>
             </div>
           </div>
           
-          {/* Right column - Credit card visual */}
+          {/* Right column - Rupee symbol visual */}
           <div className="relative h-[500px] flex justify-center items-center">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-radial from-saath-100/50 to-transparent rounded-full animate-pulse-soft"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-radial from-cyan-400/10 to-transparent rounded-full animate-pulse-soft"></div>
             
-            {/* Main card */}
-            <div className="relative w-80 h-48 rounded-2xl bg-gradient-to-r from-saath-700 to-saath-900 text-white p-6 shadow-xl rotate-6 z-20 animate-float">
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-xs text-saath-100">Virtual Card</p>
-                  <p className="text-lg font-bold mt-1">SaathPay</p>
-                </div>
-                <div className="w-12 h-12 rounded-full bg-saath-500/20 backdrop-blur-sm flex items-center justify-center">
-                  <CreditCard className="w-6 h-6 text-white" />
-                </div>
-              </div>
+            <div className="relative z-10 w-64 h-64 rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 flex items-center justify-center animate-float">
+              <IndianRupee className="w-32 h-32 text-white" strokeWidth={1.5} />
               
-              <div className="mt-10">
-                <p className="text-sm text-saath-100">Card Number</p>
-                <p className="font-mono">•••• •••• •••• 4291</p>
-              </div>
-              
-              <div className="absolute bottom-6 right-6">
-                <div className="w-10 h-10 rounded-full bg-saath-400/30 backdrop-blur-sm flex items-center justify-center">
-                  <Lock className="w-5 h-5 text-white" />
-                </div>
-              </div>
+              <div className="absolute -inset-3 border-2 border-dashed border-cyan-300/30 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
             </div>
             
-            {/* Background card 1 */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-48 rounded-2xl bg-gradient-to-r from-saath-500 to-saath-700 text-white p-6 shadow-lg rotate-12 z-10 opacity-70"></div>
-            
-            {/* Background card 2 */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-48 rounded-2xl bg-gradient-to-r from-saath-300 to-saath-500 text-white p-6 shadow-md rotate-[18deg] z-0 opacity-40"></div>
-            
-            {/* Floating elements */}
-            <div className="absolute top-[30%] right-[5%] w-14 h-14 rounded-lg glass flex items-center justify-center shadow-lg z-30 animate-on-scroll animate-float" style={{ animationDelay: "0.8s" }}>
-              <PieChart className="w-7 h-7 text-saath-600" />
-            </div>
-            
-            <div className="absolute bottom-[20%] left-[10%] w-14 h-14 rounded-lg glass flex items-center justify-center shadow-lg z-30 animate-on-scroll animate-float" style={{ animationDelay: "1.2s", animationDuration: "5s" }}>
-              <Lock className="w-7 h-7 text-saath-600" />
-            </div>
+            {/* Background elements */}
+            <div className="absolute top-[20%] right-[10%] w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400 blur-xl opacity-40"></div>
+            <div className="absolute bottom-[30%] left-[15%] w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400 blur-xl opacity-30"></div>
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+const cn = (...classes: (string | boolean | undefined)[]) => {
+  return classes.filter(Boolean).join(' ');
 };
 
 export default Hero;
