@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Button from './Button';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,7 +53,11 @@ const Navbar = () => {
               <Button variant="ghost" size="sm">
                 Log In
               </Button>
-              <Button variant="primary" size="sm">
+              <Button 
+                variant="primary" 
+                size="sm"
+                onClick={() => window.location.href = '/dashboard'}
+              >
                 Get Started
               </Button>
             </div>
@@ -105,7 +110,12 @@ const Navbar = () => {
             <Button variant="ghost" size="md" className="w-full justify-center">
               Log In
             </Button>
-            <Button variant="primary" size="md" className="w-full justify-center">
+            <Button 
+              variant="primary" 
+              size="md" 
+              className="w-full justify-center"
+              onClick={() => window.location.href = '/dashboard'}
+            >
               Get Started
             </Button>
           </div>
