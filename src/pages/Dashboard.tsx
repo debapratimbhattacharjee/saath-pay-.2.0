@@ -1,12 +1,33 @@
 
-import React from 'react';
-import { Search, SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ProductSearchResults from '@/components/ProductSearchResults';
+import { searchProducts } from '@/utils/mockProducts';
 
 const Dashboard = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      const results = searchProducts(searchQuery);
+      setSearchResults(results);
+      setIsSearching(true);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setIsSearching(false);
+    setSearchResults([]);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header with search */}
@@ -19,14 +40,32 @@ const Dashboard = () => {
           </div>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <div className="w-full flex-1 md:w-auto md:flex-none">
-              <div className="relative">
+              <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search products, offers, and more..."
-                  className="w-full rounded-full bg-background pl-8 md:w-[300px] lg:w-[400px]"
+                  className="w-full rounded-full bg-background pl-8 pr-10 md:w-[300px] lg:w-[400px]"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-              </div>
+                {searchQuery && (
+                  <button 
+                    type="button"
+                    onClick={clearSearch}
+                    className="absolute right-2.5 top-2.5 h-5 w-5 rounded-full text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+                {isSearching && (
+                  <ProductSearchResults 
+                    products={searchResults} 
+                    searchQuery={searchQuery} 
+                    onClose={clearSearch} 
+                  />
+                )}
+              </form>
             </div>
             <nav className="flex items-center gap-2">
               <Button variant="ghost" size="icon" className="rounded-full">
