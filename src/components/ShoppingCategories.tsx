@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Smartphone, ShoppingBag, Shirt, Tv, Headphones, Shoe, Home, Heart } from 'lucide-react';
+import { Smartphone, ShoppingBag, Shirt, Tv, Headphones, ShoppingBasket, Home, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [
@@ -8,7 +8,7 @@ const categories = [
   { name: 'Smartphones', icon: <Smartphone className="h-5 w-5" />, query: 'smartphone' },
   { name: 'Fashion', icon: <ShoppingBag className="h-5 w-5" />, query: 'fashion' },
   { name: 'Clothing', icon: <Shirt className="h-5 w-5" />, query: 'clothing' },
-  { name: 'Shoes', icon: <Shoe className="h-5 w-5" />, query: 'shoes' },
+  { name: 'Shoes', icon: <ShoppingBasket className="h-5 w-5" />, query: 'shoes' },
   { name: 'Audio', icon: <Headphones className="h-5 w-5" />, query: 'headphones' },
   { name: 'Home', icon: <Home className="h-5 w-5" />, query: 'home' },
   { name: 'Deals', icon: <Heart className="h-5 w-5" />, query: 'deals' },
