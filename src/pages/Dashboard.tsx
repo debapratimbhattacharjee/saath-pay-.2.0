@@ -1,34 +1,12 @@
-
 import React, { useState } from 'react';
-import { Search, SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles, X, ShoppingBag } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ProductSearchResults from '@/components/ProductSearchResults';
-import { searchProducts } from '@/utils/mockProducts';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      const results = searchProducts(searchQuery);
-      setSearchResults(results);
-      setIsSearching(true);
-    }
-  };
-
-  const clearSearch = () => {
-    setSearchQuery('');
-    setIsSearching(false);
-    setSearchResults([]);
-  };
 
   const navigateToShopping = () => {
     navigate('/shopping');
@@ -36,43 +14,15 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with search */}
+      {/* Header without search */}
       <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
-          <div className="mr-4 hidden md:flex">
+          <div className="mr-4 flex">
             <span className="text-xl font-bold text-primary">
               <span className="text-primary">Saath</span>Pay
             </span>
           </div>
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-              <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products, offers, and more..."
-                  className="w-full rounded-full bg-background pl-8 pr-10 md:w-[300px] lg:w-[400px]"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                {searchQuery && (
-                  <button 
-                    type="button"
-                    onClick={clearSearch}
-                    className="absolute right-2.5 top-2.5 h-5 w-5 rounded-full text-muted-foreground hover:text-foreground"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-                {isSearching && (
-                  <ProductSearchResults 
-                    products={searchResults} 
-                    searchQuery={searchQuery} 
-                    onClose={clearSearch} 
-                  />
-                )}
-              </form>
-            </div>
+          <div className="flex flex-1 items-center justify-end space-x-2">
             <nav className="flex items-center gap-2">
               <Button variant="ghost" size="icon" className="rounded-full">
                 <CreditCard className="h-5 w-5" />
