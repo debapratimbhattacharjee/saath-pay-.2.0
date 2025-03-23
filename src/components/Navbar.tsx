@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Button from './Button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -49,6 +49,10 @@ const Navbar = () => {
             <a href="#benefits" className="text-gray-700 hover:text-saath-600 transition-colors">
               Benefits
             </a>
+            <Link to="/shopping" className="text-gray-700 hover:text-saath-600 transition-colors flex items-center gap-1">
+              <ShoppingCart className="h-4 w-4" />
+              Shopping
+            </Link>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm">
                 Log In
@@ -106,6 +110,14 @@ const Navbar = () => {
           >
             Benefits
           </a>
+          <Link
+            to="/shopping"
+            className="flex items-center py-2 text-gray-700 hover:text-saath-600 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <ShoppingCart className="h-4 w-4 mr-2" />
+            Shopping
+          </Link>
           <div className="pt-4 flex flex-col space-y-3">
             <Button variant="ghost" size="md" className="w-full justify-center">
               Log In
