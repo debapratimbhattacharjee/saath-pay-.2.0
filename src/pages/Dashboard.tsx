@@ -1,17 +1,19 @@
 
 import React, { useState } from 'react';
-import { Search, SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles, X } from 'lucide-react';
+import { Search, SplitSquareVertical, ReceiptText, CreditCard, TagsIcon, Sparkles, X, ShoppingBag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductSearchResults from '@/components/ProductSearchResults';
 import { searchProducts } from '@/utils/mockProducts';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +28,10 @@ const Dashboard = () => {
     setSearchQuery('');
     setIsSearching(false);
     setSearchResults([]);
+  };
+
+  const navigateToShopping = () => {
+    navigate('/shopping');
   };
 
   return (
@@ -122,12 +128,43 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-md transition-all cursor-pointer">
+          <Card className="hover:shadow-md transition-all cursor-pointer" onClick={navigateToShopping}>
             <CardContent className="p-6 flex flex-col items-center text-center">
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                <TagsIcon className="h-6 w-6 text-primary" />
+                <ShoppingBag className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-sm font-medium">Offers & Cashback</h3>
+              <h3 className="text-sm font-medium">Shop Now</h3>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Shopping Banner */}
+        <div className="mb-8">
+          <Card className="overflow-hidden cursor-pointer" onClick={navigateToShopping}>
+            <CardContent className="p-0">
+              <div className="bg-gradient-to-r from-primary/20 to-primary/5 p-6 flex flex-col md:flex-row items-center justify-between">
+                <div className="mb-4 md:mb-0">
+                  <h3 className="text-xl font-bold mb-2">Explore SaathPay Shopping</h3>
+                  <p className="text-muted-foreground max-w-md">
+                    Discover exclusive deals and offers on top brands with our virtual cards.
+                    Get the best prices on electronics, fashion, and more.
+                  </p>
+                  <Button 
+                    className="mt-4" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateToShopping();
+                    }}
+                  >
+                    <ShoppingBag className="mr-2 h-4 w-4" /> Shop Now
+                  </Button>
+                </div>
+                <div className="flex items-center justify-center space-x-3">
+                  <div className="bg-background rounded-lg p-2 shadow-md">
+                    <ShoppingBag className="h-12 w-12 text-primary" />
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
