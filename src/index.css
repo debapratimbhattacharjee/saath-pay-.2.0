@@ -118,6 +118,10 @@
   .dark-gradient-bg {
     @apply bg-gradient-to-r from-[#071428] via-[#0c2542] to-[#0f172a];
   }
+  
+  .light-blue-gradient-bg {
+    @apply bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50;
+  }
 }
 
 /* 3D Credit Card Styles */

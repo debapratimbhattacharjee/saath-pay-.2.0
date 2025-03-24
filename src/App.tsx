@@ -20,7 +20,7 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <React.StrictMode>
-      <ThemeProvider defaultTheme="system" storageKey="saathpay-theme">
+      <ThemeProvider defaultTheme="light" storageKey="saathpay-theme">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
