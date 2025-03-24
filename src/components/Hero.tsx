@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
-import { ArrowRight, IndianRupee } from 'lucide-react';
+import { ArrowRight, CreditCard, BadgeIndianRupee } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const Hero = () => {
@@ -129,14 +129,63 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Right column - Rupee symbol visual */}
+          {/* Right column - Credit Card 3D visual */}
           <div className="relative h-[500px] flex justify-center items-center">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-radial from-cyan-400/10 to-transparent rounded-full animate-pulse-soft"></div>
             
-            <div className="relative z-10 w-64 h-64 rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 flex items-center justify-center animate-float">
-              <IndianRupee className="w-32 h-32 text-white" strokeWidth={1.5} />
+            {/* 3D Credit Card Effect */}
+            <div className="relative z-10 perspective-1000">
+              <div className="credit-card w-[320px] h-[200px] bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-xl shadow-xl transform rotate-y-[-15deg] rotate-x-[15deg] transition-transform duration-500 hover:rotate-y-0 hover:rotate-x-0">
+                <div className="absolute inset-0 rounded-xl overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-white/10"></div>
+                  <div className="absolute bottom-0 right-0 w-full h-full bg-black/20"></div>
+                </div>
+                
+                {/* Card Chip */}
+                <div className="absolute top-8 left-6">
+                  <div className="w-12 h-10 bg-yellow-300/90 rounded-md flex items-center justify-center overflow-hidden">
+                    <div className="w-full h-[1px] bg-yellow-700/30"></div>
+                    <div className="w-full h-[1px] bg-yellow-700/30 mt-2"></div>
+                    <div className="w-full h-[1px] bg-yellow-700/30 mt-2"></div>
+                    <div className="absolute w-full h-full grid grid-cols-3 gap-[1px]">
+                      {[...Array(9)].map((_, i) => (
+                        <div key={i} className="bg-yellow-700/20"></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Card Number */}
+                <div className="absolute top-[85px] left-6 right-6">
+                  <div className="flex justify-between">
+                    <div className="flex space-x-4">
+                      <div className="text-white text-xl font-mono">XXXX</div>
+                      <div className="text-white text-xl font-mono">XXXX</div>
+                      <div className="text-white text-xl font-mono">XXXX</div>
+                      <div className="text-white text-xl font-mono">XXXX</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Card Holder */}
+                <div className="absolute bottom-6 left-6">
+                  <div className="text-white/80 text-xs mb-1">CARD HOLDER</div>
+                  <div className="text-white text-sm font-medium">SAATH PAY</div>
+                </div>
+                
+                {/* Card Logo */}
+                <div className="absolute bottom-6 right-6">
+                  <div className="flex items-center">
+                    <CreditCard className="w-10 h-10 text-white" />
+                  </div>
+                </div>
+                
+                {/* Holographic effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-xl opacity-30 mix-blend-overlay"></div>
+              </div>
               
-              <div className="absolute -inset-3 border-2 border-dashed border-cyan-300/30 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
+              {/* Card reflection */}
+              <div className="w-[320px] h-[40px] mt-2 mx-auto bg-gradient-to-b from-cyan-400/30 to-transparent rounded-[50%] blur-md"></div>
             </div>
             
             {/* Background elements */}
