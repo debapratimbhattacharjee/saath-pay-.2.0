@@ -45,24 +45,24 @@ const Navbar = () => {
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
-        isScrolled 
-          ? 'py-3 backdrop-blur-md shadow-sm dark:bg-gray-900/80 bg-slate-400' 
-          : 'py-5 bg-transparent'
-      )}
-    >
-      <div className="container-custom">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold">
-                <span className="saath-brand-text">Saath</span>
-                <span className="text-foreground">Pay</span>
-              </span>
-            </Link>
-          </div>
+<header
+  className={cn(
+    'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
+    isScrolled 
+      ? 'py-3 backdrop-blur-md shadow-sm dark:bg-gray-900/80 bg-slate-500' 
+      : 'py-5 bg-transparent'
+  )}
+>
+  <div className="container-custom">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <Link to="/" className="flex items-center">
+          <span className="text-2xl font-bold">
+            <span className={theme === 'dark' ? 'saath-brand-text' : 'text-sky-600'}>Saath</span>
+            <span className="text-foreground">Pay</span>
+          </span>
+        </Link>
+      </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
