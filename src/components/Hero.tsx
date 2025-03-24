@@ -1,13 +1,21 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
-import { ArrowRight, CreditCard, Users, Receipt, Wallet } from 'lucide-react';
+import { ArrowRight, CreditCard, Users, Receipt, Wallet, Send } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import PhoneOtpVerification from './PhoneOtpVerification';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [showOtpVerification, setShowOtpVerification] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const slides = [
     {
@@ -55,12 +63,41 @@ const Hero = () => {
     };
   }, []);
 
+  const handleSendOtp = () => {
+    // Validate phone number (simple validation)
+    if (!phoneNumber || phoneNumber.length < 10) {
+      toast({
+        variant: "destructive",
+        title: "Invalid phone number",
+        description: "Please enter a valid phone number",
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+
+    // Simulate sending OTP
+    setTimeout(() => {
+      setIsProcessing(false);
+      setShowOtpVerification(true);
+      
+      toast({
+        title: "OTP sent",
+        description: "We've sent a verification code to your phone",
+      });
+    }, 1200);
+  };
+
+  const handleOtpVerified = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div 
       ref={heroRef} 
       className={cn(
         "relative min-h-screen pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden",
-        theme === 'dark' ? 'dark-gradient-bg' : 'bg-white'
+        theme === 'dark' ? 'dark-gradient-bg' : 'light-blue-gradient-bg'
       )}
     >
       {/* Background elements for dark mode */}
@@ -75,9 +112,9 @@ const Hero = () => {
       {/* Background elements for light mode */}
       {theme === 'light' && (
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-          <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-saath-50/80 to-transparent" />
-          <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-saath-100/50 blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-saath-100/40 blur-3xl translate-x-1/3 translate-y-1/3" />
+          <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-blue-50/80 to-transparent" />
+          <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-blue-100/50 blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-blue-100/40 blur-3xl translate-x-1/3 translate-y-1/3" />
         </div>
       )}
 
@@ -88,7 +125,7 @@ const Hero = () => {
             <div className="animate-on-scroll" style={{ animationDelay: "0.1s" }}>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 {slides[activeSlide].title} <br />
-                <span className={theme === 'dark' ? 'saath-brand-text' : 'text-saath-600'}>
+                <span className={theme === 'dark' ? 'saath-brand-text' : 'text-blue-600'}>
                   {slides[activeSlide].subtitle}
                 </span>
               </h1>
@@ -109,24 +146,38 @@ const Hero = () => {
               ))}
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll" style={{ animationDelay: "0.3s" }}>
-              <div className="relative">
-                <input 
-                  type="text"
-                  placeholder="Phone number"
-                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saath-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white phone-input"
+            {!showOtpVerification ? (
+              <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll" style={{ animationDelay: "0.3s" }}>
+                <div className="relative w-full">
+                  <input 
+                    type="text"
+                    placeholder="Phone number"
+                    className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white phone-input"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  icon={isProcessing ? null : <Send />}
+                  rightIcon={true}
+                  className={`${theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700'}`}
+                  onClick={handleSendOtp}
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? "Sending OTP..." : "Get OTP"}
+                </Button>
+              </div>
+            ) : (
+              <div className="animate-on-scroll" style={{ animationDelay: "0.3s" }}>
+                <PhoneOtpVerification 
+                  phoneNumber={phoneNumber}
+                  onBack={() => setShowOtpVerification(false)}
+                  onVerified={handleOtpVerified}
                 />
               </div>
-              <Button 
-                variant="primary" 
-                size="lg" 
-                icon={<ArrowRight />}
-                rightIcon={true}
-                className={theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''}
-              >
-                Get Started
-              </Button>
-            </div>
+            )}
           </div>
           
           {/* Right column - SaathPay Group Expense Management App Card */}
