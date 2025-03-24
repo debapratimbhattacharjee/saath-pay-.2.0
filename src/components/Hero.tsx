@@ -1,29 +1,29 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
-import { ArrowRight, CreditCard, Users, Receipt, Wallet } from 'lucide-react';
+import { ArrowRight, CreditCard, Lock, PieChart } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [arrowPosition, setArrowPosition] = useState(-100);
 
   const slides = [
     {
-      title: "Manage Your Expenses",
-      subtitle: "with SaathPay",
-      description: "Split bills easily, track group expenses, and settle payments effortlessly."
-    },
-    {
       title: "Virtual Credit Cards",
       subtitle: "with SaathPay",
-      description: "Access exclusive credit card discounts without owning a credit card."
+      description: "Access exclusive credit card discounts without owning one."
     },
     {
-      title: "Improve Credit Score",
+      title: "Expense Management",
       subtitle: "with SaathPay",
-      description: "Help credit card owners improve their scores while earning incentives."
+      description: "Split bills easily and track group expenses effortlessly."
+    },
+    {
+      title: "Credit Score Boost",
+      subtitle: "with SaathPay",
+      description: "Help card owners improve their scores while you save."
     }
   ];
 
@@ -34,6 +34,18 @@ const Hero = () => {
 
     return () => clearInterval(interval);
   }, [slides.length]);
+
+  useEffect(() => {
+    const animateArrow = () => {
+      setArrowPosition(prev => {
+        if (prev > 400) return -100;
+        return prev + 2;
+      });
+    };
+
+    const arrowInterval = setInterval(animateArrow, 20);
+    return () => clearInterval(arrowInterval);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -60,20 +72,17 @@ const Hero = () => {
       ref={heroRef} 
       className={cn(
         "relative min-h-screen pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden",
-        theme === 'dark' ? 'dark-gradient-bg' : 'bg-white'
+        theme === 'dark' ? 'bg-background' : 'bg-white'
       )}
     >
-      {/* Background elements for dark mode */}
-      {theme === 'dark' && (
+      {/* Background elements */}
+      {theme === 'dark' ? (
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-950/30 to-transparent" />
           <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-blue-700/10 blur-3xl -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-[50%] h-[60%] rounded-full bg-cyan-500/5 blur-3xl translate-x-1/3 translate-y-1/3" />
         </div>
-      )}
-      
-      {/* Background elements for light mode */}
-      {theme === 'light' && (
+      ) : (
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
           <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-saath-50/80 to-transparent" />
           <div className="absolute top-0 left-0 w-[70%] h-[70%] rounded-full bg-saath-100/50 blur-3xl -translate-x-1/2 -translate-y-1/2" />
@@ -129,110 +138,86 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Right column - SaathPay Group Expense Management App Card */}
+          {/* Right column - Card with consistent styling */}
           <div className="relative h-[500px] flex justify-center items-center">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-radial from-cyan-400/10 to-transparent rounded-full animate-pulse-soft"></div>
-            
-            {/* SaathPay App Card Effect */}
-            <div className="relative z-10 perspective-1000">
-              <div className="credit-card w-[320px] h-[450px] bg-gradient-to-br from-saath-600 via-saath-500 to-saath-700 rounded-3xl shadow-xl transform rotate-y-[-15deg] rotate-x-[15deg] transition-transform duration-500 hover:rotate-y-0 hover:rotate-x-0">
-                <div className="absolute inset-0 rounded-3xl overflow-hidden">
+            <div className="relative w-full h-full perspective-1000">
+              {/* Main card with consistent styling */}
+              <div 
+                className="absolute w-80 h-48 rounded-2xl p-6 z-20 bg-gradient-to-br from-saath-600 via-saath-500 to-saath-700 shadow-xl"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(3deg)',
+                  transition: 'transform 0.3s ease'
+                }}
+              >
+                {/* Card content */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-full bg-white/10"></div>
                   <div className="absolute bottom-0 right-0 w-full h-full bg-black/20"></div>
                 </div>
                 
-                {/* App Header */}
-                <div className="absolute top-6 left-0 right-0 flex justify-between items-center px-6">
-                  <div className="flex items-center">
-                    <Wallet className="w-7 h-7 mr-2 text-white" />
-                    <div className="text-white font-bold text-lg">SaathPay</div>
-                  </div>
-                  <div className="bg-white/20 px-3 py-1 rounded-full text-white text-xs font-medium">
-                    MVP
-                  </div>
-                </div>
-                
-                {/* Group Expense */}
-                <div className="absolute top-[80px] left-0 right-0 px-5">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                    <div className="flex justify-between items-center mb-3">
-                      <div className="flex items-center">
-                        <Users className="w-5 h-5 text-white mr-2" />
-                        <div className="text-white font-medium text-sm">Trip to Goa</div>
-                      </div>
-                      <div className="text-white/80 text-xs">4 members</div>
+                <div className="relative z-10 h-full flex flex-col justify-between text-white">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-xs text-saath-100">Virtual Card</p>
+                      <p className="text-lg font-bold">SaathPay</p>
                     </div>
-                    
-                    <div className="h-px bg-white/20 my-2"></div>
-                    
-                    <div className="flex justify-between text-white mb-1">
-                      <div className="text-sm">Total spent:</div>
-                      <div className="font-semibold">₹12,800</div>
-                    </div>
-                    
-                    <div className="flex justify-between text-white mb-2">
-                      <div className="text-sm">Your share:</div>
-                      <div className="font-semibold">₹3,200</div>
-                    </div>
-                    
-                    <div className="flex justify-center">
-                      <div className="bg-gradient-to-r from-cyan-400 to-teal-400 px-4 py-1.5 rounded-lg text-xs font-medium text-gray-800">
-                        Settle up
-                      </div>
+                    <div className="w-10 h-10 rounded-full bg-saath-500/20 backdrop-blur-sm flex items-center justify-center">
+                      <CreditCard className="w-5 h-5" />
                     </div>
                   </div>
-                </div>
-                
-                {/* Recent Transactions */}
-                <div className="absolute top-[230px] left-0 right-0 px-5">
-                  <div className="text-white/90 text-sm font-semibold mb-2 px-1">Recent Expenses</div>
                   
-                  {/* Transaction Items */}
-                  <div className="space-y-3">
-                    {[
-                      { name: "Dinner", amount: "₹2,400", icon: <Receipt className="w-4 h-4" /> },
-                      { name: "Hotel Stay", amount: "₹6,000", icon: <Receipt className="w-4 h-4" /> },
-                      { name: "Beach Activities", amount: "₹1,800", icon: <Receipt className="w-4 h-4" /> }
-                    ].map((item, i) => (
-                      <div key={i} className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex justify-between items-center">
-                        <div className="flex items-center">
-                          <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center mr-2">
-                            {item.icon}
-                          </div>
-                          <div className="text-white text-sm">{item.name}</div>
-                        </div>
-                        <div className="text-white text-sm font-medium">{item.amount}</div>
-                      </div>
-                    ))}
+                  <div className="mt-4">
+                    <p className="text-xs text-saath-100">Card Number</p>
+                    <p className="font-mono text-sm">•••• •••• •••• 4291</p>
                   </div>
-                </div>
-                
-                {/* Bottom Action Bar */}
-                <div className="absolute bottom-5 left-0 right-0 px-5">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-full flex justify-around py-3">
-                    <div className="w-8 h-8 rounded-full bg-cyan-500/50 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                      <CreditCard className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                      <Receipt className="w-4 h-4 text-white" />
+                  
+                  <div className="absolute bottom-5 right-5">
+                    <div className="w-10 h-10 rounded-full bg-saath-400/30 backdrop-blur-sm flex items-center justify-center">
+                      <Lock className="w-5 h-5" />
                     </div>
                   </div>
                 </div>
                 
-                {/* Glass effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-3xl opacity-30 mix-blend-overlay"></div>
+                {/* Animated arrow effect */}
+                <div 
+                  className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-2xl"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  <div 
+                    className="absolute h-0.5 bg-gradient-to-r from-transparent to-cyan-300 rounded-full"
+                    style={{
+                      width: '60px',
+                      left: `${arrowPosition}px`,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      opacity: arrowPosition > -20 && arrowPosition < 300 ? 0.8 : 0,
+                      transition: 'opacity 0.3s',
+                      filter: 'drop-shadow(0 0 4px rgba(34, 211, 238, 0.7))'
+                    }}
+                  />
+                </div>
               </div>
               
-              {/* Card reflection */}
-              <div className="w-[280px] h-[40px] mt-2 mx-auto bg-gradient-to-b from-cyan-400/20 to-transparent rounded-[50%] blur-md"></div>
+              {/* Floating elements */}
+              <div 
+                className="absolute top-[30%] right-[5%] w-14 h-14 rounded-lg glass flex items-center justify-center shadow-lg z-30 animate-float"
+                style={{ animationDelay: "0.8s" }}
+              >
+                <PieChart className="w-6 h-6 text-saath-600" />
+              </div>
+              
+              <div 
+                className="absolute bottom-[20%] left-[10%] w-14 h-14 rounded-lg glass flex items-center justify-center shadow-lg z-30 animate-float"
+                style={{ 
+                  animationDelay: "1.2s",
+                  animationDuration: "5s"
+                }}
+              >
+                <Lock className="w-6 h-6 text-saath-600" />
+              </div>
             </div>
-            
-            {/* Background elements */}
-            <div className="absolute top-[20%] right-[10%] w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400 blur-xl opacity-40"></div>
-            <div className="absolute bottom-[30%] left-[15%] w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400 blur-xl opacity-30"></div>
           </div>
         </div>
       </div>

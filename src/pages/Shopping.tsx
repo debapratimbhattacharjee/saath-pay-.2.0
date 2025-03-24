@@ -179,90 +179,107 @@ const Shopping = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section */}
-      <div className="pt-20 bg-gradient-to-br from-cyan-600 to-blue-700 dark:from-cyan-800 dark:to-blue-900">
-        <div className="container-custom py-16 md:py-24">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="text-white max-w-2xl">
-              <h1 className="text-3xl md:text-5xl font-bold mb-6">
-                Compare. Save. Shop Smart.
-              </h1>
-              <p className="text-lg md:text-xl text-white/90 mb-8">
-                Find the best prices across top e-commerce platforms and save even more with exclusive SaathPay credit card discounts.
-              </p>
-              
-              <form onSubmit={handleSearch} className="flex w-full max-w-2xl">
-                <div className="relative flex-1">
-                  <Input 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search for products across all platforms..."
-                    className="pr-10 h-14 pl-5 w-full rounded-l-md text-black border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  />
-                  <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                </div>
-                <Button type="submit" className="h-14 rounded-l-none px-6 bg-amber-500 hover:bg-amber-600 text-black font-medium text-base">
-                  Compare Prices
-                </Button>
-              </form>
-              
-              <div className="flex flex-wrap gap-4 mt-6">
-                <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-none py-1.5 px-3 text-sm cursor-pointer">iPhone 15</Badge>
-                <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-none py-1.5 px-3 text-sm cursor-pointer">Samsung TV</Badge>
-                <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-none py-1.5 px-3 text-sm cursor-pointer">Air Fryer</Badge>
-                <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-none py-1.5 px-3 text-sm cursor-pointer">Gaming Laptop</Badge>
-              </div>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl w-full max-w-md">
-              <div className="flex items-center mb-5">
-                <BadgePercent className="h-6 w-6 text-amber-300 mr-2" />
-                <h3 className="text-white text-xl font-semibold">Today's Best Deals</h3>
-              </div>
-              <div className="space-y-4">
-                {featuredDeals.slice(0, 3).map((deal) => (
-                  <div key={deal.id} className="flex items-center gap-4 p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
-                    <img src={deal.image} alt={deal.name} className="w-16 h-16 object-cover rounded-md" />
-                    <div className="flex-1">
-                      <h4 className="text-white font-medium line-clamp-1">{deal.name}</h4>
-                      <div className="flex items-center mt-1">
-                        <span className="text-amber-300 font-bold">{formatIndianPrice(deal.bestPrice)}</span>
-                        <span className="text-white/60 text-sm line-through ml-2">{formatIndianPrice(deal.originalPrice)}</span>
-                      </div>
-                      <div className="flex items-center mt-1 text-sm text-white/80">
-                        <span>Best at {deal.bestStore}</span>
-                        <Badge variant="outline" className="ml-2 bg-green-500/20 text-green-300 border-green-500/30 text-xs">
-                          Save {formatIndianPrice(deal.savedAmount)}
-                        </Badge>
-                      </div>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-white/50" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+    {/* Hero Section */}
+<div className="pt-20 bg-background :from-cyan-800 dark:to-blue-900">
+  <div className="container-custom py-16 md:py-24">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="text-black dark:text-white max-w-2xl">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6 text-black dark:text-white">
+          Compare. Save. Shop Smart.
+        </h1>
+        <p className="text-lg md:text-xl text-black/90 dark:text-white/90 mb-8">
+          Find the best prices across top e-commerce platforms and save even more with exclusive SaathPay credit card discounts.
+        </p>
         
-        <div className="bg-gradient-to-br from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700">
-          <div className="container-custom py-4">
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-center md:text-left">
-              <div className="flex items-center">
-                <CreditCard className="h-6 w-6 text-amber-900 mr-2" />
-                <span className="text-amber-900 font-medium">Extra SaathPay discounts on all purchases</span>
-              </div>
-              <div className="flex items-center">
-                <TrendingUp className="h-6 w-6 text-amber-900 mr-2" />
-                <span className="text-amber-900 font-medium">Real-time price tracking across platforms</span>
-              </div>
-              <div className="flex items-center">
-                <ArrowDown className="h-6 w-6 text-amber-900 mr-2" />
-                <span className="text-amber-900 font-medium">Get alerts when prices drop</span>
-              </div>
-            </div>
+        {/* Search form remains unchanged */}
+        <form onSubmit={handleSearch} className="flex w-full max-w-2xl">
+          <div className="relative flex-1">
+            <Input 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search for products across all platforms..."
+              className="pr-10 h-14 pl-5 w-full rounded-l-md text-black border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
           </div>
+          <Button type="submit" className="h-14 rounded-l-none px-6 bg-amber-500 hover:bg-amber-600 text-black font-medium text-base">
+            Compare Prices
+          </Button>
+        </form>
+        
+        <div className="flex flex-wrap gap-4 mt-6">
+          <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-black dark:text-white border-none py-1.5 px-3 text-sm cursor-pointer">
+            iPhone 15
+          </Badge>
+          <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-black dark:text-white border-none py-1.5 px-3 text-sm cursor-pointer">
+            Samsung TV
+          </Badge>
+          <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-black dark:text-white border-none py-1.5 px-3 text-sm cursor-pointer">
+            Air Fryer
+          </Badge>
+          <Badge variant="outline" className="bg-white/10 hover:bg-white/20 text-black dark:text-white border-none py-1.5 px-3 text-sm cursor-pointer">
+            Gaming Laptop
+          </Badge>
         </div>
       </div>
+      
+      <div className="bg-slate-500/10 backdrop-blur-sm p-6 rounded-xl w-full max-w-md">
+        <div className="flex items-center mb-5">
+          <BadgePercent className="h-6 w-6 text-amber-300 mr-2" />
+          <h3 className="text-black dark:text-white text-xl font-semibold">Today's Best Deals</h3>
+        </div>
+        <div className="space-y-4">
+          {featuredDeals.slice(0, 3).map((deal) => (
+            <div key={deal.id} className="flex items-center gap-4 p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
+              <img src={deal.image} alt={deal.name} className="w-16 h-16 object-cover rounded-md" />
+              <div className="flex-1">
+                <h4 className="text-black dark:text-white font-medium line-clamp-1">{deal.name}</h4>
+                <div className="flex items-center mt-1">
+                  <span className="text-amber-300 font-bold">{formatIndianPrice(deal.bestPrice)}</span>
+                  <span className="text-black/60 dark:text-white/60 text-sm line-through ml-2">
+                    {formatIndianPrice(deal.originalPrice)}
+                  </span>
+                </div>
+                <div className="flex items-center mt-1 text-sm text-black/80 dark:text-white/80">
+                  <span>Best at {deal.bestStore}</span>
+                  <Badge variant="outline" className="ml-2 bg-green-500/20 text-green-300 border-green-500/30 text-xs">
+                    Save {formatIndianPrice(deal.savedAmount)}
+                  </Badge>
+                </div>
+              </div>
+              <ArrowRight className="h-5 w-5 text-black/50 dark:text-white/50" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div className="bg-gradient-to-br from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700">
+    <div className="container-custom py-4">
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-center md:text-left">
+        <div className="flex items-center">
+          <CreditCard className="h-6 w-6 text-amber-900 dark:text-amber-800 mr-2" />
+          <span className="text-amber-900 dark:text-amber-800 font-medium">
+            Extra SaathPay discounts on all purchases
+          </span>
+        </div>
+        <div className="flex items-center">
+          <TrendingUp className="h-6 w-6 text-amber-900 dark:text-amber-800 mr-2" />
+          <span className="text-amber-900 dark:text-amber-800 font-medium">
+            Real-time price tracking across platforms
+          </span>
+        </div>
+        <div className="flex items-center">
+          <ArrowDown className="h-6 w-6 text-amber-900 dark:text-amber-800 mr-2" />
+          <span className="text-amber-900 dark:text-amber-800 font-medium">
+            Get alerts when prices drop
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
       
       {/* Featured Products Carousel */}
       <div className="container-custom py-12">
