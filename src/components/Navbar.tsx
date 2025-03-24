@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Button from './Button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingBag } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,28 +34,29 @@ const Navbar = () => {
       <div className="container-custom">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold">
                 <span className="saath-brand-text">Saath</span>
                 <span className="text-foreground">Pay</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-foreground/90 hover:text-primary transition-colors">
+            <Link to="/" className="text-foreground/90 hover:text-primary transition-colors">
               Home
-            </a>
+            </Link>
             <a href="#features" className="text-foreground/90 hover:text-primary transition-colors">
               Features
             </a>
             <a href="#how-it-works" className="text-foreground/90 hover:text-primary transition-colors">
               How It Works
             </a>
-            <a href="#" className="text-foreground/90 hover:text-primary transition-colors">
-              Contact
-            </a>
+            <Link to="/shop" className="text-foreground/90 hover:text-primary transition-colors flex items-center gap-1">
+              <ShoppingBag size={18} />
+              Shop
+            </Link>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
               <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
@@ -72,6 +74,9 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
+            <Link to="/shop" className="text-foreground/90 hover:text-primary transition-colors">
+              <ShoppingBag size={20} />
+            </Link>
             <ThemeToggle />
             <button
               className="text-foreground focus:outline-none"
@@ -95,13 +100,13 @@ const Navbar = () => {
         )}
       >
         <div className="container px-4 py-6 space-y-4">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="block py-2 text-foreground/90 hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
             Home
-          </a>
+          </Link>
           <a
             href="#features"
             className="block py-2 text-foreground/90 hover:text-primary transition-colors"
@@ -116,13 +121,13 @@ const Navbar = () => {
           >
             How It Works
           </a>
-          <a
-            href="#"
+          <Link
+            to="/shop"
             className="block py-2 text-foreground/90 hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Contact
-          </a>
+            Shop
+          </Link>
           <div className="pt-4 flex flex-col space-y-3">
             <Button variant="ghost" size="md" className="w-full justify-center dark:text-white dark:hover:bg-white/10">
               Login
