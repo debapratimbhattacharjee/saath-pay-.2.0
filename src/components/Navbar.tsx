@@ -2,15 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Button from './Button';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag, User } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,9 +20,29 @@ const Navbar = () => {
       setIsScrolled(scrollPosition > 10);
     };
 
+    // Check if user is authenticated
+    const checkAuth = () => {
+      const userData = localStorage.getItem('saathpay_user');
+      if (userData) {
+        try {
+          const user = JSON.parse(userData);
+          setIsAuthenticated(user.isAuthenticated || false);
+        } catch (error) {
+          setIsAuthenticated(false);
+        }
+      }
+    };
+
+    checkAuth();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('saathpay_user');
+    setIsAuthenticated(false);
+    navigate('/');
+  };
 
   return (
     <header
@@ -59,16 +81,42 @@ const Navbar = () => {
             </Link>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
-                Login
-              </Button>
-              <Button 
-                variant="primary" 
-                size="sm"
-                className={theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''}
-              >
-                Sign Up
-              </Button>
+              
+              {isAuthenticated ? (
+                <>
+                  <Link to="/dashboard">
+                    <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
+                      <User size={16} className="mr-2" />
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleLogout}
+                    className="dark:text-white/90 dark:hover:bg-white/10"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button 
+                      variant="primary" 
+                      size="sm"
+                      className={theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
 
@@ -129,19 +177,51 @@ const Navbar = () => {
             Shop
           </Link>
           <div className="pt-4 flex flex-col space-y-3">
-            <Button variant="ghost" size="md" className="w-full justify-center dark:text-white dark:hover:bg-white/10">
-              Login
-            </Button>
-            <Button 
-              variant="primary" 
-              size="md" 
-              className={cn(
-                "w-full justify-center",
-                theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''
-              )}
-            >
-              Sign Up
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                  <Button 
+                    variant="ghost" 
+                    size="md" 
+                    className="w-full justify-center dark:text-white dark:hover:bg-white/10"
+                  >
+                    <User size={16} className="mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  size="md" 
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full justify-center dark:text-white dark:hover:bg-white/10"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="ghost" size="md" className="w-full justify-center dark:text-white dark:hover:bg-white/10">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
+                  <Button 
+                    variant="primary" 
+                    size="md" 
+                    className={cn(
+                      "w-full justify-center",
+                      theme === 'dark' ? 'bg-cyan-500 hover:bg-cyan-600' : ''
+                    )}
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
