@@ -75,10 +75,20 @@ const Navbar = () => {
             <a href="#how-it-works" className="text-foreground/90 hover:text-primary transition-colors">
               How It Works
             </a>
-            <Link to="/shop" className="text-foreground/90 hover:text-primary transition-colors flex items-center gap-1">
-              <ShoppingBag size={18} />
-              Shop
-            </Link>
+            <Link
+  to={isAuthenticated ? "/shop" : "/login"}
+  onClick={(e) => {
+    if (!isAuthenticated) {
+      e.preventDefault(); // Prevent direct navigation
+      navigate("/login", { state: { from: "/shop" } }); // Redirect to login with a state to redirect to shop later
+    }
+  }}
+  className="text-foreground/90 hover:text-primary transition-colors flex items-center gap-1"
+>
+  <ShoppingBag size={18} />
+  Shop
+</Link>
+
             <div className="flex items-center space-x-4">
               <ThemeToggle />
               

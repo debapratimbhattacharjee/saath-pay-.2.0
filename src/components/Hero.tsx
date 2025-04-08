@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Button from './Button';
 import { ArrowRight, CreditCard, Lock, PieChart } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -118,14 +119,11 @@ const Hero = () => {
               ))}
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll" style={{ animationDelay: "0.3s" }}>
+            <div className="flex flex-col sm:flex-row  animate-on-scroll" style={{ animationDelay: "0.3s" }}>
               <div className="relative">
-                <input 
-                  type="text"
-                  placeholder="Phone number"
-                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saath-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white phone-input"
-                />
+               
               </div>
+               <Link to="/signup">
               <Button 
                 variant="primary" 
                 size="lg" 
@@ -135,6 +133,7 @@ const Hero = () => {
               >
                 Get Started
               </Button>
+              </Link>
             </div>
           </div>
           

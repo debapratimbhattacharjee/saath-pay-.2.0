@@ -255,7 +255,7 @@ const Shopping = () => {
     </div>
   </div>
   
-  <div className="bg-gradient-to-br from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700">
+  <div className="bg-gradient-to-t bg-sky-300 dark:bg-cyan-500 ">
     <div className="container-custom py-4">
       <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-center md:text-left">
         <div className="flex items-center">
