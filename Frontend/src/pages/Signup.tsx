@@ -26,9 +26,9 @@ const Signup = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (password !== confirmPassword) {
       toast({
         variant: "destructive",
@@ -37,7 +37,7 @@ const Signup = () => {
       });
       return;
     }
-    
+  
     if (!acceptTerms) {
       toast({
         variant: "destructive",
@@ -46,29 +46,61 @@ const Signup = () => {
       });
       return;
     }
-    
+  
     setLoading(true);
-    
-    // Simulate signup process
-    setTimeout(() => {
-      setLoading(false);
-      
-      // Store user info in localStorage
-      localStorage.setItem('saathpay_user', JSON.stringify({ 
-        name, 
-        email, 
-        isAuthenticated: true 
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.detail || "Signup failed");
+      }
+  
+      // Store user info locally
+      localStorage.setItem('saathpay_user', JSON.stringify({
+        name,
+        email,
+        isAuthenticated: true,
       }));
-      
+  
       toast({
         title: "Account created successfully",
         description: "Welcome to SaathPay!",
       });
-      
+  
       navigate('/dashboard');
-    }, 1500);
+  
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast({
+          variant: "destructive",
+          title: "Signup failed",
+          description: err.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Signup failed",
+          description: "Something went wrong.",
+        });
+      }
+    }finally {
+      setLoading(false);
+    }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-muted/20 p-4">
       <Card className="w-full max-w-md">
