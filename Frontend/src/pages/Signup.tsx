@@ -50,13 +50,13 @@ const Signup = () => {
     setLoading(true);
   
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/signup', {
+      const response = await fetch('http://localhost:8000/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name,
+          username: name,
           email,
           password,
         }),
@@ -70,7 +70,7 @@ const Signup = () => {
   
       // Store user info locally
       localStorage.setItem('saathpay_user', JSON.stringify({
-        name,
+        //name,
         email,
         isAuthenticated: true,
       }));
