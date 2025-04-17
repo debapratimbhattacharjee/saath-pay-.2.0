@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# SQLite DB file
+*.sqlite3
+*.db
+
+# Logs and misc
+*.log
+
+# Pydantic/compiled files
+*.json
+
+# Env variables / secrets
+.env
+
+# FastAPI specific
+instance/
