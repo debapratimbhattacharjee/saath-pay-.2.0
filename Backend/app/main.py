@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from app.api import auth
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.db.session import base, engine
+from app.models.User import User
 
 app = FastAPI()
+
+base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
