@@ -28,7 +28,7 @@ class AuthService:
  
     def login(self, user: UserLogin):
         db = SessionLocal()
-        db_user = db.query(User).filter_by(email=user.email).first()
+        db_user = db.query(User.User).filter_by(email=user.email).first()
         db.close()
         if not db_user:
             raise HTTPException(status_code=404, detail="User not found")
