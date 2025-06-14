@@ -55,8 +55,7 @@ const App = () => {
   {/* Cardholder dashboard nested under layout */}
 <Route path="/cardholder-dashboard" element={<CardholderDashboardLayout />}>
   <Route index element={<CardholderDashboard />} />
-  <Route path="/cardholder-dashboard/my-card" element={<MyCard />} />
-
+  <Route path="my-card" element={<MyCard />} />
   <Route path="transactions" element={<Transactions />} />
   <Route path="earnings" element={<Earnings />} />
   <Route path="analytics" element={<Analytics />} />
