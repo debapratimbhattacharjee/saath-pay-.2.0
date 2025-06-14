@@ -1,0 +1,223 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.8rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    
+    --saath-gradient: linear-gradient(90deg, #071428 0%, #0c2542 50%, #0f172a 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl lg:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-glass dark:bg-white/10 dark:border-white/10;
+  }
+
+  .glass-dark {
+    @apply bg-black/70 backdrop-blur-md border border-white/10 shadow-glass;
+  }
+
+  .glass-card {
+    @apply rounded-2xl glass transition-all duration-300 hover:shadow-lg dark:bg-gray-900/20;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .dark-gradient-bg {
+    @apply bg-gradient-to-r from-[#071428] via-[#0c2542] to-[#0f172a];
+  }
+  
+  .light-blue-gradient-bg {
+    @apply bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50;
+  }
+}
+
+/* 3D Credit Card Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-y-\[-15deg\] {
+  transform: rotateY(-15deg);
+}
+
+.rotate-x-\[15deg\] {
+  transform: rotateX(15deg) rotateY(-15deg);
+}
+
+.hover\:rotate-y-0:hover {
+  transform: rotateY(0deg);
+}
+
+.hover\:rotate-x-0:hover {
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
+.credit-card {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.credit-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* Scroll styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-saath-300/50 rounded-full dark:bg-gray-600/50;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-saath-400/50 dark:bg-gray-500/50;
+}
+
+/* Custom animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-on-scroll {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition: clip-path.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.revealed {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.saath-brand-text {
+  @apply bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent;
+}
+
+.dark .phone-input {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
+.dot-indicator {
+  @apply w-2 h-2 rounded-full mx-1 transition-all duration-300;
+}
+
+.dot-indicator.active {
+  @apply bg-white w-4;
+}
+
+.dot-indicator.inactive {
+  @apply bg-white/50;
+}
+
+.dark .dot-indicator.active {
+  @apply bg-white;
+}
+
+.dark .dot-indicator.inactive {
+  @apply bg-white/30;
+}
