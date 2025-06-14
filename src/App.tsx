@@ -21,7 +21,7 @@ import Settings from "./pages/Settings";
 import HelpSupport from "./pages/HelpSupport";
 import CardholderDashboard from "./pages/CardholderDashboard";
 import CardholderDashboardLayout from "./components/CardholderDashboardLayout"
-import MyCard from "./pages/Mycard";
+
 import Transactions from "./pages/Transactions";
 import Earnings from "./pages/Earnings";
 import Analytics from "./pages/Analytics";
@@ -55,7 +55,7 @@ const App = () => {
   {/* Cardholder dashboard nested under layout */}
 <Route path="/cardholder-dashboard" element={<CardholderDashboardLayout />}>
   <Route index element={<CardholderDashboard />} />
-  <Route path="my-card" element={<MyCard />} />
+  
   <Route path="transactions" element={<Transactions />} />
   <Route path="earnings" element={<Earnings />} />
   <Route path="analytics" element={<Analytics />} />
