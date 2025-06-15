@@ -27,7 +27,9 @@ import Earnings from "./pages/Earnings";
 import Analytics from "./pages/Analytics";
 import Payment from "./pages/Payment";
 import QRCodeDisplay from "./pages/QRCodeDisplay";
-import MyCard from "./pages/Mycard";
+
+import MyCard from "./pages/MyCard";
+
 
 
 
@@ -57,6 +59,7 @@ const App = () => {
 <Route path="/cardholder-dashboard" element={<CardholderDashboardLayout />}>
   <Route index element={<CardholderDashboard />} />
   <Route path="my-card" element={<MyCard />} />
+
   <Route path="transactions" element={<Transactions />} />
   <Route path="earnings" element={<Earnings />} />
   <Route path="analytics" element={<Analytics />} />
