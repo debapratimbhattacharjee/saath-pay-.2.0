@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { QrCode, ArrowLeft, Share2, Download, Copy } from 'lucide-react';
+import { QRCode } from 'react-qrcode-logo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -14,7 +15,7 @@ const QRCodeDisplay = () => {
 
   useEffect(() => {
     if (!qrData) {
-      navigate('/dashboard/split-expenses'); // Fixed path
+      navigate('/dashboard/split-expenses');
       return;
     }
 
@@ -35,13 +36,14 @@ const QRCodeDisplay = () => {
     }
   };
 
+  const upiLink = `upi://pay?pa=debagourbhatta-2@okicici&pn=SaathPay&am=${qrData?.amountPerPerson}&cu=INR`;
+
   if (!qrData) return null;
 
   return (
     <div className="min-h-screen bg-fintech-dark p-4 flex items-center justify-center">
       <div className="w-full max-w-md space-y-6">
 
-        {/* Header */}
         <div className="flex items-center justify-between">
           <Link to="/dashboard/split-expenses" className="flex items-center text-fintech-primary hover:text-fintech-primary/80 transition-colors">
             <ArrowLeft size={20} className="mr-2" />
@@ -49,37 +51,31 @@ const QRCodeDisplay = () => {
           </Link>
         </div>
 
-        {/* QR Code Card with Animation */}
         <Card className={`fintech-card transition-all duration-700 ease-out ${
           isVisible 
             ? 'opacity-100 transform translate-y-0 scale-100' 
             : 'opacity-0 transform translate-y-8 scale-95'
         }`}>
           <CardContent className="p-8 text-center space-y-6">
-
-            {/* Title */}
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-foreground">Split Payment QR</h1>
-              <p className="text-muted-foreground">Share this QR code with your friends</p>
+              <p className="text-muted-foreground">Scan or share this QR code with your friends</p>
             </div>
 
-            {/* QR Code Box */}
             <div className={`transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-50'
             }`}>
-              <div className="w-64 h-64 bg-white border-4 border-fintech-primary/20 rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
-                <div className="text-center">
-                  <QrCode size={120} className="mx-auto mb-4 text-fintech-dark animate-bounce" />
-                  <div className="space-y-1">
-                    <div className="w-24 h-2 bg-fintech-dark/20 rounded mx-auto"></div>
-                    <div className="w-32 h-2 bg-fintech-dark/20 rounded mx-auto"></div>
-                    <div className="w-20 h-2 bg-fintech-dark/20 rounded mx-auto"></div>
-                  </div>
-                </div>
+              <div className="w-64 h-64 bg-white border-4 border-fintech-primary/20 rounded-2xl flex items-center justify-center mx-auto shadow-2xl">
+                <QRCode
+                  value={upiLink}
+                  size={220}
+                  logoWidth={40}
+                  quietZone={10}
+                  ecLevel="H"
+                />
               </div>
             </div>
 
-            {/* Payment Info */}
             <div className={`space-y-4 transition-all duration-1000 delay-500 ${
               isVisible ? 'opacity-100 transform translate-x-0' : 'opacity-0 transform translate-x-4'
             }`}>
@@ -98,7 +94,6 @@ const QRCodeDisplay = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className={`grid grid-cols-3 gap-3 transition-all duration-1000 delay-700 ${
               isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
             }`}>
@@ -126,7 +121,6 @@ const QRCodeDisplay = () => {
               </Button>
             </div>
 
-            {/* Status Message */}
             <div className={`text-center space-y-2 transition-all duration-1000 delay-900 ${
               isVisible ? 'opacity-100' : 'opacity-0'
             }`}>
@@ -141,7 +135,6 @@ const QRCodeDisplay = () => {
           </CardContent>
         </Card>
 
-        {/* Bottom Navigation Buttons */}
         <div className={`space-y-3 transition-all duration-1000 delay-1100 ${
           isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
         }`}>
